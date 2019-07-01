@@ -1,0 +1,90 @@
+Exercises:
+
+Short Answer:
+
+1. Why do programmers use pseudocode?
+
+A: Pseudocode allows programmers to create a map of their software without the need to think about the actual programming language. Like a outline for a novel, it allows them to define the overall structure of the software and may even help to solve logic prolems before any actual coding takes place.
+
+2. If you run pseudocode on your computer what would happen.
+
+A: The computer does not understand pseudocode so either nothing would happen or a whole lot of errors.
+
+Programming Assignment:
+
+1. Create a function that takes two numbers and prints out the greater number.
+
+A: 
+INPUT first number
+INPUT second number
+IF the first number is greater than the second number then
+  PRINT first number
+ELSE
+  PRINT second number
+END IF
+
+2. Create a function that prints out the numbers from 1 to 100.
+
+A:
+INIT count to 1
+DO PRINT count
+  ADD 1 to count
+  WHILE count is less than 100 
+END DO
+
+3. Create a function that searches for a specific entry in a phonebook.
+
+A: 
+INPUT phonebook
+INPUT first name search term
+INPUT last name search term
+INIT results
+FOR Each entry in the phonebook
+  IF first name search term AND last name search term are equal to an entry in the phonebook
+    ADD the entry to results
+  END IF
+END FOR
+RETURN results
+
+4. Using the pseudocode you wrote for the previous question, implement it in any computer language of your choice.
+
+A: 
+const phoneBookEntries = [
+  {
+    name: 'peter',
+    last: 'aaron',
+    number: '123-1112'
+  },
+  {
+    name: 'allen',
+    last: 'bean',
+    number: '651-7658'
+  },
+  {
+    name: 'chester',
+    last: 'bee',
+    number: '999-6234'
+  },
+  {
+    name: 'chester',
+    last: 'cheese',
+    number: '777-3676'
+  },
+];
+
+const findName = (phoneBook, searchName, searchLast) => {
+  let result = ['No Entry Found'];
+  for (let i = 0; i < phoneBook.length; i++) {
+    if (phoneBook[i].name == searchName && phoneBook[i].last == searchLast) {
+      result = [phoneBook[i].name, phoneBook[i].last, phoneBook[i].number];
+      break;
+    } 
+  }
+  return result.join(' ');
+};
+
+const searchTermName = 'chester';
+
+const searchTermLast = 'bee';
+
+findName(phoneBookEntries, searchTermName, searchTermLast);
