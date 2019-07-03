@@ -1,0 +1,180 @@
+Exercises:
+
+1. In your own words, explain what clean code is and why it is important.
+
+A: Clean code is well planned and executed code that is both easily updated and easy to read. This is important because many developers may end up working on the same code. Difficult to read code takes longer to decipher wasting valuable time. Poorly planned code can take longer to update or upgrade if the code is not broken up into concise pieces. Developers may have to search out which parts of the code need updating again wasting time.
+
+2.Read this article about Toyota and their use of bad code. Although you may not yet understand all of the topics discussed, think about another commonly used object that relies on computers and explain what would happen if the code was not created to an acceptable standard.
+
+A: Because more and household items are becoming connected, it is more important than ever to keep your code clean. Even ovens are controlled by computers these days and this could spell disaster if the code was implemented incorrectly. Something as simple as an improperly coded off switch could cause a deadly fire.
+
+3. Would you consider the following to be clean code? Explain why or why not. If not, refactor the code.
+
+A: The function name and the variables are not descriptive enough. Also, it is harder to read without indentation.
+
+FUNCTION convertTemperature(temperature, unit)
+  IF unit = "F" THEN
+    SET temperatureCoverted to (temperature-32) * (5/9)    
+    PRINT temperatureCoverted                       
+  ELSE IF unit = "C" THEN          
+    SET temperatureCoverted to temperature * 1.8000 + 32.00   
+    PRINT temperatureCoverted                      
+  END IF
+END FUNCTION
+
+The temperature conversions for F and C could be separate functions depending on whether they are called upon again or not.
+
+4. Would you consider the following to be clean code? Explain why or why not. If not, refactor the code.
+
+A: This example is much easier to read and would be considered clean.
+
+
+5. Using pseudocode, refactor the code for the following examples using the principles you have learned in this checkpoint.
+
+a. The following function prints the subtotal of a customer's transaction and receives payment accordingly.
+
+A:
+FUNCTION checkOutCustomer(subTotal, discountRate, paymentType)
+  SET ammountDue to subTotal * discountRate + (subTotal * tax)
+  PRINT "Your total due is: " + ammountDue
+  IF paymentType = 'CASH' THEN
+    CALL getPayment RETURNING amount
+    PRINT "Change due: " + amount - ammountDue
+  ELSE IF paymentType = 'CREDIT CARD' THEN
+    CALL getPayment RETURNING amount
+    PRINT "Your credit card has been charged: " + ammountDue
+  END IF
+END FUNCTION
+
+b. The following function checks out a book if there are no issues with the guest's account.
+
+A:
+FUNCTION checkoutBook(book, guest)
+  IF guest.accountActive AND guest.outstandingFees = 0 AND NOT(guest.hasOverdueBooks) THEN
+    APPEND book to guest.books
+    SET book.status to "Checked Out"
+    PRINT "Your books have been issued."    
+  ELSE
+    PRINT "Unable to check out book."
+  END IF
+END FUNCTION
+
+c. The following class is a code snippet that should support the transactions a customer can perform at an ATM.
+
+A:
+CLASS BankAccount
+
+  FUNCTION displayBalance
+    PRINT balance
+  END FUNCTION
+
+  FUNCTION deposit(amount)
+    SET balance to balance + amount
+  END FUNCTION
+
+  FUNCTION withdraw(amount)
+    IF balance > amount THEN
+      SET balance to balance - amount
+    END
+  END FUNCTION
+
+END CLASS
+
+CLASS AccountOffers
+
+  FUNCTION creditCardOffer
+    IF NOT(customer.hasCreditCard) THEN
+      CALL offerCreditCard
+    END
+  END FUNCTION
+
+  FUNCTION checkStatus
+    IF NOT(customer.hasCheckingAccount) THEN
+      CALL offerCheckingAccount
+    END
+  END FUNCTION
+
+END CLASS
+
+ ....
+ ....
+ ....
+
+END
+
+Programming Questions:
+
+6. Square - Given an array of integers, find out whether the sum of the integers is a perfect square. If it is a perfect square, return the square root, otherwise return the sum.
+
+A:
+const numbers = [6, 3, 9, 3, 9, 6];
+
+const numbersSum = (value) => {
+  let sum = value.reduce((total, currentValue) => total + currentValue, 0);
+  return sum;
+};
+
+const isWhole = (value) => {
+  if (value % 1 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
+  
+const squareArray = (numbers) => {
+  let sum = numbersSum(numbers);
+  let sumSquared = Math.sqrt(sum);
+  if (isWhole(sumSquared) === true) {
+    return `The square root of your array is ${sumSquared}`;
+  } else {
+    return `The sum of your array is ${sum}`;
+  }
+};
+
+squareArray(numbers);
+
+7. Duplicate - Given an array of integers, find out whether the array contains any duplicate elements. The function should return true if any value appears at least twice in the array, and false if every element is distinct.
+
+A:
+const numbers = [3, 6, 9, 12, 6];
+
+const findDuplicate = (value) => {
+  for (i = 0; i <= value.length; i++) {
+    for (j = 0; j <= value.length; j++) {
+      if (i != j && value[i] == value[j]) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+findDuplicate(numbers);
+
+8. Anagram - An anagram is a word, phrase, or name formed by rearranging the letters of another word. For example, spar can be formed from rasp. Given two strings, stringOne and stringTwo, determine if stringOne is an anagram of stringTwo. Assume that the strings contain only lowercase letters and do not worry about case-sensitivity. Hint: Your first task will be to convert the strings to arrays.
+
+A:
+const stringOne = 'abcd';
+const stringTwo = 'adbc';
+
+const alphabetize = (value) => {
+  let word = value.split('');
+  word = word.sort();
+  word = word.join();
+  return word;
+}
+
+const isAnagram = (value1, value2) => {
+  let string1 = alphabetize(value1);
+  let string2 = alphabetize(value2);
+  if (string1 == string2) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+isAnagram(stringOne, stringTwo)
+
+
