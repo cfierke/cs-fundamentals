@@ -1,0 +1,109 @@
+Exercises:
+
+1. What is the main difference between a stack and a queue?
+
+A: The main difference between a stack and queue is a stack uses LIFO (Last in first out) priority collection while a queue uses FIFO (First in first out) priority collection.
+
+2: What are the similarities between stacks and queues?
+
+A: Both a stack and queue are ways to store collections of data which may be accessed by the programmer (either from the top of the stack or the front of the queue).
+
+3. Imagine you are an engineer tasked with implementing the UNDO and REDO options in a word processor such as Microsoft Word. Which data structure would you use for each option and why?
+
+A: The UNDO function would utilize a Stack to perform an undo. All of the user actions are kept in a stack and the undo function removes the last action the user performed (LIFO). The REDO function would also use a Stack to perform a redo. All of the actions the user has undone are kept in a stack. When the user decides to redo an action the last action that was undone is pulled from the top of the stack (LIFO).
+
+Programming Questions:
+
+
+You may program the following question in any language of your choice. Before you begin coding, write out a plan as to how you will solve the question.
+
+1. Given a string, reverse it using a stack. For example, the string "Bloc!" should be converted to "!colB".
+
+A:
+FUNCTION reverseString(word)
+  INIT newArray to empty array
+  FOR each character in word	
+    APPEND character to newArray using push()
+  END FOR
+  INIT reversedString to empty string
+  WHILE newArray length is greater than 0
+    APPEND character to reversedString using pop()
+  END WHILE
+  RETURN reversedString
+END FUNCTION
+
+const reverseString = (value) => {
+  let newArray = [];
+  let reversedString = '';
+  for (let i = 0; i < value.length; i++) {
+    newArray.push(value[i]);
+  };
+  while (newArray.length > 0) {
+    reversedString += newArray.pop();
+  };
+  return reversedString;
+}
+
+2. Implement the pop method of a stack using one queue. Make a FIFO data structure mirror the functionality of a LIFO data structure. Since the internal list is not the same as defined in the checkpoint, it may help to rewrite the pseudocode first.
+
+To delete an item, take all of the elements in the queue one at a time and put them at the end of the queue, except for the last one which should be removed and returned.
+
+A:
+CLASS Stack
+  FUNCTION pop(stack)
+    INIT newArray as empty array
+    FOR each item in stack
+      APPEND item to newArray using push()
+    END FOR
+    INIT lastIn as last item of newArray using pop()
+    RETURN lastin
+  END FUNCTION
+END CLASS
+
+class Stack {
+  constructor() {
+    this._stack = [];
+  }
+
+  getStack() {
+    return this._stack;
+  }
+
+  push(value) {
+    return this._stack.push(value);
+  }
+
+  lifoPop() {
+    return this._stack.pop();
+  }
+
+  fifoPop() {
+    let newArray = [];
+    for (let i = this._stack.length - 1; i >= 0; i--) {
+      newArray.push(this._stack[i]);
+    }
+    let firstIn = newArray.pop();
+    this._stack = newArray.reverse();
+    return firstIn;
+  }
+}
+
+3. Implement the enqueue and dequeue methods defined in the checkpoint inside your own Queue class.
+
+A:
+class Queue {
+  constructor() {
+    this.queue = [];
+  }
+
+  dequeue() {
+    let firstIn = this.queue[0];
+    this.queue.shift();
+    return firstIn;
+  }
+
+  enqueue(value) {
+    return this.queue.push(value);
+  }
+};
+
