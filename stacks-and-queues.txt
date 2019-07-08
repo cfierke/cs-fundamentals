@@ -52,11 +52,12 @@ A:
 CLASS Stack
   FUNCTION pop(stack)
     INIT newArray as empty array
+    INIT lastIn as empty array
     FOR each item in stack
-      APPEND item to newArray using push()
+      APPEND all item except last to newArray using push()
+      APPEND last item to lastIn using push()
     END FOR
-    INIT lastIn as last item of newArray using pop()
-    RETURN lastin
+    RETURN lastIn
   END FUNCTION
 END CLASS
 
@@ -73,18 +74,18 @@ class Stack {
     return this._stack.push(value);
   }
 
-  lifoPop() {
-    return this._stack.pop();
-  }
-
-  fifoPop() {
+  pop() {
     let newArray = [];
-    for (let i = this._stack.length - 1; i >= 0; i--) {
-      newArray.push(this._stack[i]);
+    let lastIn = [];
+    for (let i = 0; i < this._stack.length; i++) {
+      if (this._stack.length -1 != i) {
+        newArray.push(this._stack[i]);
+      } else {
+        lastIn.push(this._stack[i])
+      }
     }
-    let firstIn = newArray.pop();
-    this._stack = newArray.reverse();
-    return firstIn;
+    this._stack = newArray;
+    return lastIn;
   }
 }
 
