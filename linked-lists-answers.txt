@@ -1,0 +1,170 @@
+Exercises:
+
+1. What are some pros and cons of using linked lists instead of arrays?
+
+A: Arrays are stored sequentially in memory, this can be a problem if an array grows to large. Memory may need to be shifted in order to accommodate new entries in the array. Linked list are not stored sequentially in memory. They are stored at any open place in memory and therefore can become very large without needing to shift the memory around. On the other hand, arrays can be accessed by index. This can come in handy when you have a large array that you need to navigate through. Although a linked list can be accessed via index, the list must be searched from beginning to end. This can be slower depending on the size of the list.
+
+2. Come up with a real world example of a linked list.
+
+A: One real world example of a linked list is a scavenger hunt. The first item in the scavenger hunt reveals the location of the second item. The second item in the scavenger hunt reveals the location of the third item and so on.
+
+Programming Questions
+
+1. The linked list push function should take a value, create a node, and add it to the end of a list. Below is pseudocode for a push function for a singly linked list. However, there is something wrong with it. Submit both an explanation of the bug and a functional implementation of the method.
+
+FUNCTION push(element)
+CREATE node
+SET node.value TO element
+SET node.next TO null
+
+IF the head node does not exist
+ THEN SET head to node
+ELSE
+ SET current to head
+ SET current.next to node
+END IF
+END FUNCTION
+
+A: There is no while loop in the pseudocode which means there is no way to move from one entry in the linked list to the next.
+
+class Node {
+ constructor(element){
+   this.element = element;
+   this.next = null;
+ }
+}
+ 
+class LinkedList {
+ constructor() {
+   this.head = null;
+   this.size = 0;
+ }
+ 
+ getList() {
+   let current = this.head;
+   let returnString = '';
+ 
+   while (current) {
+     returnString += current.element + ' ';
+     current = current.next;
+   }
+ 
+   return returnString;
+ }
+ 
+ getList() {
+   let current = this.head;
+   let returnString = '';
+ 
+   while (current) {
+     returnString += current.element + ' ';
+     current = current.next;
+   }
+ 
+   return returnString;
+ }
+ 
+ push(element) { 
+   let node = new Node(element);
+   let current;
+ 
+   if (this.head == null) {
+     this.head = node;
+   } else {
+     current = this.head;
+     while (current.next) {
+       current = current.next;
+     } 
+     current.next = node;
+   }
+   this.size++;
+ }
+
+}
+ 
+const list = new LinkedList();
+ 
+list.push(1);
+list.push(2);
+list.push(2);
+list.push(3);
+list.push(3);
+list.push(4);
+list.push(4);
+list.push(5);
+ 
+list.getList(list);
+
+
+1 . Given an unsorted singly linked list, remove all duplicates from the linked list.
+Example
+Input: a -> c -> d -> d -> a
+Output: a -> c -> d
+
+A:
+LinkedList.prototype.removeDuplicates = (list) => {
+ if (!list.head || !list.head.next) {
+   return list.getList();
+ }
+ 
+ let nodes = {list};
+ let current = list.head;
+ let nextNode = current.next;
+  
+ nodes[current.element] = true;
+ 
+ while (nextNode) {
+   let element = nextNode.element;
+   if (nodes[element]) {
+     current.next = nextNode.next;
+     } else {
+       nodes[element] = true;
+       current = nextNode;
+     }
+   nextNode = nextNode.next;
+   }
+ return list.getList();
+}
+
+list.reverseList(list);
+ 
+
+3. Given an unsorted singly linked list, reverse it.
+Example
+Input: a -> b -> c -> d
+Output: d -> c -> b -> a
+
+A:
+
+LinkedList.prototype.reverseList = (list) => {
+ if (!list.head || !list.head.next) {
+   return list.getList;
+ }
+ 
+ let nodes=[];
+ let current = list.head;
+  while (current) {
+   nodes.push(current);
+   current = current.next;
+ }
+  
+ let reverseList = new LinkedList();
+  reverseList.head = nodes.pop();
+ current = reverseList.head;
+  let node = nodes.pop(); 
+  while (node) {
+   node.next = null;
+   current.next = node;
+   current = current.next;
+   node = nodes.pop();
+ }
+ 
+ return reverseList.getList();
+}
+
+list.getList(list);
+
+
+
+
+
