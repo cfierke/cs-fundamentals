@@ -1,0 +1,113 @@
+class Node {
+  constructor(element){
+    this.element = element;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+    this.size = 0;
+  }
+
+  getList() {
+    let current = this.head;
+    let returnString = '';
+
+    while (current) {
+      returnString += current.element + ' ';
+      current = current.next;
+    }
+
+    return returnString;
+  }
+
+  push(element) {  
+    let node = new Node(element); 
+    let current; 
+
+    if (this.head == null) {
+      this.head = node;
+    } else { 
+      current = this.head; 
+      while (current.next) { 
+        current = current.next; 
+      }  
+      current.next = node; 
+    } 
+    this.size++; 
+  }
+
+  removeDuplicates() {
+    if (!this.head || !this.head.next) {
+      return this.getList();
+    }
+
+    let nodes = {};
+    let current = this.head;
+    let nextNode = current.next;
+      
+    nodes[current.element] = true;
+
+    while (nextNode) {
+      let element = nextNode.element;
+      if (nodes[element]) {
+        current.next = nextNode.next;
+        } else {
+          nodes[element] = true;
+          current = nextNode;
+        }
+      nextNode = nextNode.next;
+    }
+    return this.getList();
+  }
+
+  reverseList() {
+    if (!this.head || !this.head.next) {
+      return this.getList;
+    }
+
+    let nodes = []; 
+    let current = this.head;
+    
+    while (current) {
+      nodes.push(current);
+      current = current.next;
+    }
+      
+    let reverseList = new LinkedList();
+    
+    reverseList.head = nodes.pop();
+    current = reverseList.head;
+    
+    let node = nodes.pop();  
+    
+    while (node) {
+      node.next = null;
+      current.next = node; 
+      current = current.next;
+      node = nodes.pop();
+    }
+
+    return reverseList.getList();
+  }
+
+}
+
+const list = new LinkedList();
+
+list.push(1);
+list.push(2);
+list.push(2);
+list.push(3);
+list.push(3);
+list.push(4);
+list.push(4);
+list.push(5);
+
+list.getList();
+
+list.removeDuplicates();
+
+list.reverseList();
