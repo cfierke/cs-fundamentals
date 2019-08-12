@@ -1,0 +1,294 @@
+Exercises
+
+For exercises requiring code, you are free to use the language of your choice.
+
+1. What is a hash table?
+
+A: A hash table is a data structure that stores data in key/value pairs. The data is accessible by retrieving the key for each pair.
+
+2. What is hashing?
+
+A: Hashing is the process in which data is transformed into a string of characters via a hashing function. 
+
+3. How does a hash table store data?
+
+A: A hash table stores data by assigning key/value pairs to an array. The position of the key/value pair within the array is determined by hashing the key of the pair. The hashing function creates the same hash code every time making the hash table searchable by the hash code.
+
+4. How are hash tables and objects different?
+
+A: Hash tables are used to store similar types of data. Objects are used to store data of various types. 
+
+5. Determine whether you would use a hash table or an object to store each of the following pieces of data:
+* A list of pets and their unique names.
+
+A: Hash Table.
+
+* The name, age, and the birthday of your best friend.
+
+A: Object.
+
+
+* The name and location of every company in a given city.
+
+A: Hash Table.
+
+* All of the books checked out from a library by a particular individual.
+
+A: Hash Table.
+
+* The primary and secondary phone numbers for a contact.
+
+A: Object.
+
+> Programming Questions
+
+1. Create a hash table that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers.
+
+A:
+
+class HashNode {
+ constructor(key, value, next) {
+   this.key = key;
+   this.value = value;
+   this.next = next || null;
+ }
+};
+ 
+class HashTable {
+ constructor(size) {
+   this.storage = new Array(size);
+   this.storageLimit = this.storage.length;
+ }
+ 
+ createHash(string) {
+   let hash = 0;
+   for (let i = 0; i < string.length; i++) {
+     hash += string.charCodeAt(i);
+   }
+   return hash % this.storageLimit;
+ }
+ 
+ insertHash(key, value) {
+   let index = this.createHash(key);
+   if (!this.storage[index]) {
+     this.storage[index] = new HashNode(key, value);
+   } else if (this.storage[index].key === key) {
+     this.storage[index].value = value;
+   } else {
+     let current = this.storage[index];
+     while (current.next) {
+       if (current.next.key === key) {
+         current.next.value = value;
+         return;
+       }
+       current = current.next;
+     }
+     current.next = new HashNode(key, value);
+   }
+ }
+ 
+ getHash(key) {
+   let index = this.createHash(key);
+   if (!this.storage[index]) {
+     return 'Invalid Phone Number!'
+   } else {
+     let current = this.storage[index];
+     while (current) {
+       if (current.key === key) {
+         return `Name: ${current.value.name} Address: ${current.value.address} Phone: ${current.key}`;
+         current = current.next;
+       }
+       return 'Invalid Phone Number!'
+     }
+   }
+ }
+ 
+};
+ 
+const customers = new HashTable(15);
+ 
+customers.insertHash('555-1212', {name: 'Brian', address: '123 fake st.'});
+customers.insertHash('444-2242', {name: 'Wendy', address: '321 real st.'});
+customers.insertHash('321-8722', {name: 'Peter', address: '5550 real fake st.'});
+ 
+customers.getHash('321-8722');
+
+2. Create a hash table that allows a store owner to track their store's inventory and quantity.
+
+A:
+
+class HashNode {
+ constructor(key, value, next) {
+   this.key = key;
+   this.value = value;
+   this.next = next || null;
+ }
+};
+ 
+class HashTable {
+ constructor(size) {
+   this.storage = new Array(size);
+   this.storageLimit = this.storage.length;
+ }
+ 
+ createHash(string) {
+   let hash = 0;
+   for (let i = 0; i < string.length; i++) {
+     hash += string.charCodeAt(i);
+   }
+   return hash % this.storageLimit;
+ }
+ 
+  insertItem(key, value) {
+   let index = this.createHash(key);
+   if (!this.storage[index]) {
+     this.storage[index] = new HashNode(key, value);
+   } else {
+     let current = this.storage[index];
+     while (current.next) {
+       current = current.next;
+     }
+     current.next = new HashNode(key, value);
+   }
+ }
+ 
+ updateItem(key, value) {
+   let index = this.createHash(key);
+   if (this.storage[index].key === key) {
+     this.storage[index].value = value;
+   } else {
+     let current = this.storage[index];
+     while (current.next) {
+       if (current.next.key === key) {
+         current.next.value = value;
+         return;
+       }
+       current = current.next;
+     }
+   }
+ }
+ 
+ getItem(key) {
+   let index = this.createHash(key);
+   if (!this.storage[index]) {
+     return 'Invalid Item!'
+   } else {
+     let current = this.storage[index];
+     while (current) {
+       if (current.key === key) {
+         return `Item: ${current.key} On Hand: ${current.value.have} Inventory Needed: ${current.value.need}`;
+         current = current.next;
+       }
+       return 'Invalid Item!'
+     }
+   }
+ }
+ 
+ orderItem(key) {
+   let index = this.createHash(key);
+   if (!this.storage[index]) {
+     return 'Invalid Item!'
+   } else {
+     let current = this.storage[index];
+     while (current) {
+       if (current.key === key) {
+         return `Please order ${current.value.need - current.value.have} ${current.key}.`;
+         current = current.next;
+       }
+       return 'Invalid Item!'
+     }
+   }
+ }
+ 
+};
+ 
+const fruitStock = new HashTable(25);
+ 
+fruitStock.insertItem('bananas', {have: 13, need: 25});
+fruitStock.insertItem('apples', {have: 12, need: 35});
+fruitStock.insertItem('pears', {have: 6, need: 15});
+fruitStock.insertItem('mangoes', {have: 0, need: 20});
+fruitStock.insertItem('grapes', {have: 11, need: 25});
+ 
+fruitStock.getItem('apples');
+ 
+fruitStock.updateItem('bananas', {have: 11, need: 20})
+ 
+fruitStock.orderItem('bananas');
+
+
+3. Create a hash table that allows digital copies of newspapers to be entered and searched by publisher and publication date.
+
+A:
+
+class HashNode {
+ constructor(key, value, next) {
+   this.key = key;
+   this.value = value;
+   this.next = next || null;
+ }
+};
+ 
+class HashTable {
+ constructor(size) {
+   this.storage = new Array(size);
+   this.storageLimit = this.storage.length;
+ }
+ 
+ createHash(string) {
+   let hash = 0;
+   for (let i = 0; i < string.length; i++) {
+     hash += string.charCodeAt(i);
+   }
+   return hash % this.storageLimit;
+ }
+ 
+ insertPaper(key, value) {
+   let hashKey = key + value;
+   let index = this.createHash(hashKey);
+   if (!this.storage[index]) {
+     this.storage[index] = new HashNode(key, value);
+   } else if (this.storage[index].key === key) {
+     this.storage[index].value = value;
+   } else {
+     let current = this.storage[index];
+     while (current.next) {
+       if (current.next.key === key) {
+         current.next.value = value;
+         return;
+       }
+       current = current.next;
+     }
+     current.next = new HashNode(key, value);
+   }
+ }
+ 
+ getPaper(key, value) {
+   let hashKey = key + value;
+   let index = this.createHash(hashKey);
+   if (!this.storage[index]) {
+     return 'Invalid date or publication!'
+   } else {
+     let current = this.storage[index];
+     while (current) {
+       if (current.key === key) {
+         return `${current.value}, Published: ${current.key}`;
+         current = current.next;
+       }
+       return 'Invalid date or publication!'
+     }
+   }
+ }
+ 
+};
+ 
+const newspapers = new HashTable(25);
+ 
+newspapers.insertPaper('03-22-2016', 'Daily Times');
+newspapers.insertPaper('12-23-2017', 'Daily Mirror');
+newspapers.insertPaper('02-24-2011', 'Daily Informer');
+newspapers.insertPaper('08-28-2011', 'Daily Herald');
+newspapers.insertPaper('03-09-2010', 'Daily Beacon');
+newspapers.insertPaper('01-20-2019', 'Daily Examiner');
+ 
+newspapers.getPaper('03-09-2010', 'Daily Beacon')
