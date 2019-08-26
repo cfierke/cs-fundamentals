@@ -1,0 +1,233 @@
+Exercises
+
+2. What is hashing?
+
+A: Hashing is an algorithm that takes an input and converts it into a fixed length numerical index.
+
+Programming Questions
+
+1. Create a hash table that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers.
+
+A:
+class HashNode {
+  constructor(key, value) {
+    this.key = key;
+    this.value = value;
+    this.next = null;
+  }
+};
+
+class HashTable {
+  constructor(size) {
+    this.storage = new Array(size);
+    this.storageLimit = this.storage.length;
+  }
+
+  createHash(string) {
+    let hash = 0;
+    for (let i = 0; i < string.length; i++) {
+      hash += string.charCodeAt(i);
+    }
+    return hash % this.storageLimit;
+  }
+
+  insertHash(key, value) {
+    let index = this.createHash(key);
+    if (!this.storage[index]) {
+      this.storage[index] = new HashNode(key, value);
+    } else if (this.storage[index]) {
+      return `Collision detected! ${value.name}`;
+    }
+      
+  }
+
+  getHash(key) {
+    let index = this.createHash(key);
+    if (!this.storage[index]) {
+      return 'Invalid Phone Number!'
+    } else {
+      let current = this.storage[index];
+      while (current) {
+        if (current.key === key) {
+          return `Name: ${current.value.name} Address: ${current.value.address} Phone: ${current.key}`;
+        }
+        current = current.next;
+        return 'Invalid Phone Number!'
+      }
+    }
+  }
+
+};
+
+const customers = new HashTable(25);
+
+customers.insertHash('555-1212', {name: 'Brian', address: '123 fake st.'});
+customers.insertHash('444-2242', {name: 'Wendy', address: '321 real st.'});
+customers.insertHash('321-8722', {name: 'Peter', address: '5550 real fake st.'});
+customers.insertHash('321-8723', {name: 'Sam', address: '5552 real fake st.'});
+
+customers.getHash('321-8722');
+
+2. Create a hash table that allows a store owner to track their store's inventory and quantity.
+
+A:
+class HashNode {
+  constructor(key, value, next) {
+    this.key = key;
+    this.value = value;
+    this.next = next || null;
+  }
+};
+
+class HashTable {
+  constructor(size) {
+    this.storage = new Array(size);
+    this.storageLimit = this.storage.length;
+  }
+
+  createHash(string) {
+    let hash = 0;
+    for (let i = 0; i < string.length; i++) {
+      hash += string.charCodeAt(i);
+    }
+    return hash % this.storageLimit;
+  }
+
+  
+  insertItem(key, value) {
+    let index = this.createHash(key);
+    if (!this.storage[index]) {
+      this.storage[index] = new HashNode(key, value);
+    } else if (this.storage[index]) {
+      return `Collision detected! ${value.name}`;
+    }
+  }
+
+  updateItem(key, value) {
+    let index = this.createHash(key);
+    if (this.storage[index].key === key) {
+      this.storage[index].value = value;
+    } else {
+      let current = this.storage[index];
+      while (current.next) {
+        if (current.next.key === key) {
+          current.next.value = value;
+          return;
+        }
+        current = current.next;
+      }
+    }
+  }
+
+  getItem(key) {
+    let index = this.createHash(key);
+    if (!this.storage[index]) {
+      return 'Invalid Item!'
+    } else {
+      let current = this.storage[index];
+      while (current) {
+        if (current.key === key) {
+          return `Item: ${current.key} On Hand: ${current.value.have} Inventory Needed: ${current.value.need}`;
+          current = current.next;
+        }
+        return 'Invalid Item!'
+      }
+    }
+  }
+
+  orderItem(key) {
+    let index = this.createHash(key);
+    if (!this.storage[index]) {
+      return 'Invalid Item!'
+    } else {
+      let current = this.storage[index];
+      while (current) {
+        if (current.key === key) {
+          return `Please order ${current.value.need - current.value.have} ${current.key}.`;
+        }
+        current = current.next;
+        return 'Invalid Item!'
+      }
+    }
+  }
+
+};
+
+const fruitStock = new HashTable(25);
+
+fruitStock.insertItem('bananas', {have: 13, need: 25});
+fruitStock.insertItem('apples', {have: 12, need: 35});
+fruitStock.insertItem('pears', {have: 6, need: 15});
+fruitStock.insertItem('mangoes', {have: 0, need: 20});
+fruitStock.insertItem('grapes', {have: 11, need: 25});
+
+fruitStock.getItem('apples');
+
+fruitStock.updateItem('bananas', {have: 11, need: 20})
+
+fruitStock.orderItem('bananas');
+
+3. Create a hash table that allows digital copies of newspapers to be entered and searched by publisher and publication date.
+
+A:
+class HashNode {
+  constructor(key, value, next) {
+    this.key = key;
+    this.value = value;
+    this.next = next || null;
+  }
+};
+
+class HashTable {
+  constructor(size) {
+    this.storage = new Array(size);
+    this.storageLimit = this.storage.length;
+  }
+
+  createHash(string) {
+    let hash = 0;
+    for (let i = 0; i < string.length; i++) {
+      hash += string.charCodeAt(i);
+    }
+    return hash % this.storageLimit;
+  }
+
+  insertPaper(key, value) {
+    let hashKey = key + value;
+    let index = this.createHash(hashKey);
+    if (!this.storage[index]) {
+      this.storage[index] = new HashNode(key, value);
+    } else if (this.storage[index]) {
+      return `Collision detected! ${value.name}`;
+    }
+  }
+
+  getPaper(key, value) {
+    let hashKey = key + value;
+    let index = this.createHash(hashKey);
+    if (!this.storage[index]) {
+      return 'Invalid date or publication!'
+    } else {
+      let current = this.storage[index];
+      while (current) {
+        if (current.key === key) {
+          return `${current.value}, Published: ${current.key}`;
+        }
+        current = current.next;
+        return 'Invalid date or publication!'
+      }
+    }
+  }
+
+};
+
+const newspapers = new HashTable(25);
+
+newspapers.insertPaper('03-22-2016', 'Daily Times');
+newspapers.insertPaper('12-23-2017', 'Daily Mirror');
+newspapers.insertPaper('02-24-2011', 'Daily Informer');
+newspapers.insertPaper('08-28-2011', 'Daily Herald');
+newspapers.insertPaper('03-09-2010', 'Daily Beacon');
+newspapers.insertPaper('01-20-2019', 'Daily Examiner');
+
+newspapers.getPaper('03-09-2010', 'Daily Beacon')
