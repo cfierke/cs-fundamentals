@@ -1,0 +1,245 @@
+Exercises
+
+For exercises requiring code, you are free to use the language of your choice.
+
+Create a file named graphs_and_trees_answers.txt and answer these questions in it.
+
+1. What is a binary tree and what makes it unique to other trees?
+
+A: A binary tree is a data structure that starts with a root node and branches out to different child nodes. What makes it unique is that each node is only allowed two child nodes. A tree is a data structure that contains a series of nodes that start at a root node and branch out to different child nodes. In a tree, there can be more than two child nodes. 
+
+2. What is a heuristic?
+
+A: A heuristic is a type of problem solving that uses a “best guess” when the data sets involved are to large to calculate in a reasonable amount of time. They are designed to reach an approximate answer when traditional methods could take far too long to calculate.
+
+3. What is another problem besides the shortest-path problem that requires the use of heuristics?
+
+A: Another problem that can be solved with heuristics is scanning a harddrive for viruses. Harddrives can be very large and therefore could take hours to scan every file and folder. Virus scanning software will use a heuristic search to scan the parts of the harddrive that are most likely to be infected while omitting everything else. This greatly shortens the time needed to scan a user's harddrive.
+
+4: What is the difference between a depth-first search and a breadth-first search?
+
+A: Depth-first search searches a tree by starting at the root node and traversing a single branch of the tree and checking each node for the result. If the result is not found, the search continues by traversing back up the tree and checking each of the unchecked nodes until the result is found. For example, a search would start with the left branch and search each left child node in that branch before moving to the right nodes in that branch. From there, the search moves to the right branch and search each left child node of that branch first before moving onto the right child nodes.
+
+On the other hand, breadth-first search searches each layer of the tree individually. Starting with the root node, the tree traverses down one layer at a time searching both the left and right children of each layer.
+
+5: Explain in your own words what an undirected, a-cyclic, unweighted graph is.
+
+A: An undirected graph is a graph that consists of a set of nodes that are ambiguously connected. There is no starting node or ending node and each node can connect to any of the other nodes in the graph.
+
+An a-cyclic graph is a graph that has a root node and all other nodes are children of this node. The child nodes may branch out as in a tree or they may form a straight line as in a linked list.
+
+An unweighted graph is a graph that does not assign a “weight” to the edge connections within the graph. In a weighted graph, a “weight” is assigned to the edge connections to assess the cost of traversing between nodes. The cost could represent distance between two nodes of the time it takes to traverse two nodes. An unweighted graph does not contain this information.
+
+6: What kind of graph is a binary search tree?
+
+A: A binary search tree is an a-cyclic graph. It has a root node and branches out to other nodes. Nodes only connect to their parent or their child making any loops impossible.
+
+Programming Questions
+
+For the following questions, describe in words how you could solve the problem and then do so. Use the depiction of the Binary Search Tree to refer to the examples.
+
+1. Given a Binary Search Tree and a value, write a function that checks to see whether the value exists within the tree.
+
+Example: The value 10 exists in the tree. The value 23 does not exist in the tree.
+
+A: Traverse the tree starting at the top and moving left to right to see if the value you are searching for equals one of the values in the tree.
+
+class Node {
+ constructor(value) {
+   this.value = value;
+   this.left = null;
+   this.right = null;
+ }
+}
+ 
+class BinarySearchTree {
+ constructor() {
+   this.root = null;
+ }
+ 
+ insert(value) {
+   let node = this.root;
+   if (!node) {
+     this.root = new Node(value);
+     return;
+   } else {
+     let traverseTree = (node) => {
+       if (value <= node.value) {
+         if (!node.left) {
+           node.left = new Node(value);
+           return;
+         } else if (node.left) {
+           return traverseTree(node.left);
+         }
+       } else if (value > node.value) {
+         if (!node.right) {
+           node.right = new Node(value);
+           return;
+         } else if (node.right) {
+           return traverseTree(node.right);
+         }
+       } else {
+         return null;
+       }
+     };
+     return traverseTree(node);
+   }
+ }
+ 
+ contains(value) {
+   let current = this.root;
+   while(current) {
+     if(value === current.value) {
+       return true;
+     }
+     if(value < current.value) {
+       current = current.left
+     } else {
+       current = current.right
+     }
+   }
+   return false;
+ }
+ 
+}
+ 
+const bst = new BinarySearchTree();
+ 
+bst.insert(8);
+bst.insert(3);
+bst.insert(10);
+bst.insert(1);
+bst.insert(6);
+bst.insert(14);
+bst.insert(4);
+bst.insert(7);
+bst.insert(13);
+ 
+//bst.contains(15)
+bst.contains(13)
+ 
+2. Given a Binary Search Tree and two nodes, n1 and n2, write a function that finds the distance between the two nodes.
+
+Example: The distance between the nodes 4 and 10 is 4. The distance between the nodes 8 and 10 is 1. The distance between the nodes 1 and 14 is 4.
+
+A: First, find the lowest common ancestor of the two nodes. Second, count the distance between each of the nodes and the lowest common ancestor. Third, add the two distances together to get the total distance between the two nodes.
+
+class Node {
+ constructor(value) {
+   this.value = value;
+   this.left = null;
+   this.right = null;
+ }
+}
+ 
+class BinarySearchTree {
+ constructor() {
+   this.root = null;
+ }
+ 
+ insert(value) {
+   let node = this.root;
+   if (!node) {
+     this.root = new Node(value);
+     return;
+   } else {
+     let traverseTree = (node) => {
+       if (value <= node.value) {
+         if (!node.left) {
+           node.left = new Node(value);
+           return;
+         } else if (node.left) {
+           return traverseTree(node.left);
+         }
+       } else if (value > node.value) {
+         if (!node.right) {
+           node.right = new Node(value);
+           return;
+         } else if (node.right) {
+           return traverseTree(node.right);
+         }
+       } else {
+         return null;
+       }
+     };
+     return traverseTree(node);
+   }
+ }
+ 
+ contains(value) {
+   let current = this.root;
+   while(current) {
+     if(value === current.value) {
+       return true;
+     }
+     if(value < current.value) {
+       current = current.left
+     } else {
+       current = current.right
+     }
+   }
+   return false;
+ }
+ 
+ lowestCommonAncestor(current, node1, node2) {
+   if (!current) {
+     return null;
+   }
+   if (current.value === node1 || current.value === node2) {
+     return current;
+   }
+   let left = this.lowestCommonAncestor(current.left, node1, node2);
+   let right = this.lowestCommonAncestor(current.right, node1, node2);
+   if (left && right) {
+     return current;
+   }
+   return !left ? right: left;
+ }
+ 
+ getDistance(root, value, count) {
+   if(!root) {
+     return null;
+   }
+   if(root.value === value) {
+     return count;
+   }
+   if(root.value > value) {
+     count++;
+     return this.getDistance(root.left, value, count);
+   }
+   if(root.value < value) {
+     count++;
+     return this.getDistance(root.right, value, count);
+   }
+ }
+ 
+ getNodeDistance(node1, node2) {
+   let lowestAncestor = this.lowestCommonAncestor(this.root, node1, node2);
+   let distance1 = this.getDistance(lowestAncestor, node1, 0);
+   let distance2 = this.getDistance(lowestAncestor, node2, 0);
+   return distance1 + distance2;
+ }
+ 
+}
+ 
+const bst = new BinarySearchTree();
+ 
+bst.insert(8);
+bst.insert(3);
+bst.insert(10);
+bst.insert(1);
+bst.insert(6);
+bst.insert(14);
+bst.insert(4);
+bst.insert(7);
+bst.insert(13);
+ 
+//bst.getDistance(bst.root, 4, 0)
+//bst.lowestCommonAncestor(bst.root, 7, 1)
+bst.getNodeDistance(1, 13)
+ 
+ 
+
+
+
+
