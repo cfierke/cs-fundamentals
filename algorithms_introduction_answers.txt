@@ -1,0 +1,100 @@
+Exercises
+
+Provide all code and written answers in a file named algorithms_introduction_answers.txt:
+
+1. Using proper pseudo-code, describe the following primitive algorithms:
+
+* Making coffee;
+
+A:
+
+FUNCTION
+  IF coffee maker equals on
+    Turn coffee maker off
+  ENDIF
+  WHILE water reservoir water level does not equal full
+    Add water to reservoir
+  ENDWHILE
+  IF filter basket does not contain filter
+    Add filter to filter basket
+  ENDIF
+  WHILE filter contents does not equal 4 Tbsps coffee
+    Add coffee to filter
+  ENDWHILE
+  IF coffee maker equals off
+    Turn coffee maker on
+  ENDIF
+  IF coffee maker does not equal brew
+    Turn coffee maker to brew
+  ENDIF
+  WHILE coffee maker equals brew
+    Wait
+  ENDWHILE 
+
+* Washing dishes;
+
+FUNCTION
+  WHILE water level in sink does not equal ¾ full
+    Add water to sink
+  ENDWHILE
+  IF water does not equal soapy
+    Add soap to water
+  ENDIF
+  IF sponge equal dry
+    Wet sponge
+  END IF
+  WHILE there are dirty dishes
+    FOR EACH dish
+      Scrub with sponge
+      Rinse with tap water
+      Place on drying rack
+    ENDFOR
+  ENDWHILE
+  IF sink does not equal empty
+    Drain sink
+  ENDIF
+    
+A:
+
+* A choice of your own. MAking bread in a bread machine
+
+SET Recipe (Ingredient 1, Ingredient 2, Ingredient 3, Ingredient 4, Ingredient 5)
+
+FUNCTION
+  IF bread machine equals on
+   Turn off bread machine
+  ELSE
+   Remove pan from bread machine
+  ENDIF
+  FOR each Ingredient in Recipe
+    IF Ingredient does not equal Ingredient in pan
+      Add ingredient to pan
+    ENDIF
+    Return pan to bread machine
+  ENDFOR
+  IF bread machine does not equal on
+    Turn on bread machine
+  ENDIF
+  IF bread machine does not equal bake
+    Turn bread machine to bake
+  END IF
+  WHILE bread machine equals bake
+    Wait
+  ENDWHILE
+  
+A:
+
+2. As with the knot algorithm, there may be more than one way to solve the problem. It is essential to try to pick the best algorithm for a situation. Name three companies who created an algorithm that made them successful, e.g., Google's search algorithm. It doesn't need to be a tech example (such as a recipe or manufacturing a product). Google's algorithm produces more relevant results than other search engines; what about each of your cases make them stand out?
+
+A: Netflix has an algorithm that recommends what to watch based on your previous viewing history and the view history of millions of other users. They try to figure out what you might want to watch next based on what other people in your demographic have watched in the past. This has really changed how people watch television. Instead of channel surfing, people are presented with several viewing options that are catered to their specific tastes.
+
+Facebook has an algorithm that recommends friends based on your current circle of friends. Their simple algorithm tries to connect people by counting the number of similar friends between two non friends. The likelihood of a new friend being recommended to you is proportionate to the number of friends you have in common. While this algorithm is not especially complex, the popularity of Facebook makes it especially important.
+
+UPS has algorithm that removes all most all left turns from their navigation systems. Left turns can cause delays, especially in larger cities, and can also be hazardous as they expose the driver to oncoming traffic. Not to mention the fuel that is wasted by waiting for traffic during peak travel hours. UPS’s system removes left turns and replaces them with three rights. Their algorithm has saved the company millions of dollars in fuel alone and cut carbon emissions drastically.
+
+
+3. Hypothesize about what constitutes an efficient algorithm versus an inefficient algorithm.
+
+A: An efficient algorithm should contain a set of logical steps that do not deviate from the ultimate goal. Each step should be clear and concise, leading to a goal that can be reached within a finite time frame. 
+
+An inefficient algorithm deviates from the expected logical steps. It may reach the ultimate goal but it’s path is not as clear as an efficient algorithm. There may be extra steps or there may be steps that have been omitted entirely. These factors could make the algorithm slow to execute and the algorithm could possibly arrive at the wrong conclusion. 
