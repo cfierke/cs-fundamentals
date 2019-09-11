@@ -1,0 +1,54 @@
+Exercises
+For exercises requiring code, you are free to use the language of your choice.
+
+Create a file named algos_sorting_answers.txt and answer these questions in it:
+
+1. Implement a solution for bubble sort.
+
+A:
+const bubbleSort = (collection) => {
+   let swapped;
+ do {
+   swapped = false;
+   for(let i = 0; i < collection.length; i++) {
+     if(collection[i] > collection[i + 1]) {
+       let tmp = collection[i];
+       collection[i] = collection[i + 1];
+       collection[i + 1] = tmp;
+       swapped = true;
+     }
+   }
+ } while(swapped);
+ return collection;
+}
+ 
+let sortArray = [1, 4, 5, 2, 8, 3, 6, 9, 7];
+ 
+bubbleSort(sortArray);
+
+
+2. Write pseudocode for quicksort.
+
+A:
+FUNCTION QuickSort (array)
+  IF array length is less than 2
+    RETURN array
+  ENDIF
+  SET pivot point to last item in array
+  SET low to empty array
+  SET high to empty array
+  FOR EACH element in the array
+    IF element is less than the pivot point push element to low array
+    ELSE push element to high array
+    ENDIF
+  ENDFOR
+  CALL QuickSort(low), QuickSort(high) and RETURN low concatenated with high
+END FUNCTION
+
+3. We talked about time complexity in a previous checkpoint, and how to get an idea of the efficiency of an algorithm. After looking at the pseudocode for the above sorting methods, identify why merge sort and quick sort are much more efficient than the others. Walking through each algorithm with a few sample collections may help.
+
+A: Both merge sort and quick sort both implement the divide and conquer method of sorting. Merge sort sorts data by dividing a collection of data into sub collections, sorting them, and finally placing them back together. Quick sort sorts data by picking a pivot point and comparing each element to that pivot point. It uses this relationship to the pivot point to divide the collection into sub collections and again, returns them back to the original collection sorted. Both of these algorithms cut down on the number of times needed to iterate through the collection of data. This makes both algorithms more efficient than other sorting algorithms.
+
+4. All of the sorts addressed in this checkpoint are known as comparison sorts. Research bucket sort and explain how it works. What is the ideal input for bucket sort?
+
+A: Bucket sort is a sorting algorithm that takes a range of data and places that data into different buckets. These buckets are then sorted, either recursively using another round of the bucket sort algorithm, or using any of the other sorting algorithms. The data is then put back together in the original array. The ideal input for a bucket sort would be any data that is within a specific range and uniformly distributed across that range. In this scenario, each bucket will contain about the same amount of data making for more efficient sorting.
